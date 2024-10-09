@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMC</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /*
+        IMC=KG/H²
+        17<kg:muito abaixo do peso
+        17<=imc<=18,49:abaixo do peso
+        18,50<=kg<=24,99:peso normal
+        25<=kg<=29,99:Acima do peso
+        kg>30:Obesidade
+        */
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input, button, label {
+            margin: auto;
+            margin-top: 40px;
+            width: 400px;
+        }
+
+        input {
+            height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Calculo de IMC</h1>
+    <form id="imc-form">
+        <label for="peso">Digite seu peso (kg)</label>
+        <input type="text" id="peso" name="peso" required>
+
+        <label for="altura">Digite sua altura (m)</label>
+        <input type="text" id="altura" name="altura" required>
+
+        <button type="submit">
+            <p>Calcular IMC</p> 
+        </button>
+    </form>
+    <section>
+        <p id="resultado"></p>
+    </section>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("imc-form").addEventListener("submit", function (event) {
+                event.preventDefault(); // Impede o envio do formulário
+
+                var peso = parseFloat(document.getElementById("peso").value);
+                var altura = parseFloat(document.getElementById("altura").value);
+                var imc = peso / (altura * altura);
+
+                let resultado = "";
+                if (isNaN(imc) || imc <= 0) {
+                    resultado = "Esse não é um valor válido";
+                } else {
+                    switch (true) {
+                        case imc < 17:
+                            resultado = "Muito abaixo do peso!";
+                            break;
+                        case imc >= 17 && imc <= 18.49:
+                            resultado = "Abaixo do peso!";
+                            break;
+                        case imc >= 18.50 && imc <= 24.99:
+                            resultado = "Peso normal!";
+                            break;
+                        case imc >= 25 && imc <= 29.99:
+                            resultado = "Acima do peso!";
+                            break;
+                        case imc >= 30:
+                            resultado = "Obesidade!";
+                            break;
+                    }
+                }
+                document.getElementById("resultado").innerHTML = resultado;
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>
